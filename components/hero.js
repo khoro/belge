@@ -3,11 +3,15 @@ import { Link } from '@routes';
 import { isExternalUrl } from '@lib/utils';
 import project from '@lib/project';
 
-export default ({ title, description, links }) => {
+export default ({ title, description, links, background, inverted }) => {
+  const secondaryColor = inverted ? 0 : 255;
+
   return (
     <div className="root">
       <h1>{title}</h1>
-      <p>{description}</p>
+      {description && (
+        <p>{description}</p>
+      )}
       {links && (
         <ul>
           {links.map(link => (
@@ -25,9 +29,8 @@ export default ({ title, description, links }) => {
       )}
       <style jsx>{`
         .root {
-          background: ${project.colors.primary};
+          background: ${background || project.colors.primary};
           text-align: center;
-          color: #fff;
           padding: 100px 30px;
         }
 
@@ -35,14 +38,14 @@ export default ({ title, description, links }) => {
           margin: 0;
           font-weight: 500;
           font-size: 42px;
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(${secondaryColor}, ${secondaryColor}, ${secondaryColor}, 0.9);
         }
 
         p {
           font-size: 24px;
           margin: 0;
           margin-top: 15px;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(${secondaryColor}, ${secondaryColor}, ${secondaryColor}, 0.7);
           font-weight: 300;
         }
 
@@ -61,10 +64,10 @@ export default ({ title, description, links }) => {
 
         ul li a {
           display: block;
-          border: 1px solid rgba(255, 255, 255, 0.35);
+          border: 1px solid rgba(${secondaryColor}, ${secondaryColor}, ${secondaryColor}, 0.35);
           border-radius: 2px;
           padding: 13px 20px;
-          color: rgba(255, 255, 255, 0.75);
+          color: rgba(${secondaryColor}, ${secondaryColor}, ${secondaryColor}, 0.75);
           text-decoration: none;
           font-size: 18px;
           transition: all ease 0.2s;
@@ -76,9 +79,9 @@ export default ({ title, description, links }) => {
         }
 
         ul li a.primary {
-          background: rgba(255, 255, 255, 0.85);
+          background: rgba(${secondaryColor}, ${secondaryColor}, ${secondaryColor}, 0.85);
           border-color: transparent;
-          color: ${project.colors.primary};
+          color: ${background || project.colors.primary};
         }
 
         ul li a.primary:hover {

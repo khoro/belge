@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Head from 'next/head';
 import Layout from '../layout';
 import project from '@lib/project';
 import { Renderer } from '@components';
@@ -6,10 +7,15 @@ import { parse } from '@lib/page';
 
 export default class Page extends Component {
   render() {
-    const page = parse(this.props.router.query.slug || 'home');
+    const slug = this.props.router.query.slug || 'home'
+    const page = parse(slug);
 
     return (
       <Layout>
+        <Head>
+          <title>{page.meta.title}{slug !== 'home' && ` - ${project.name}`}</title>
+        </Head>
+
         <Renderer
           component={page.Content}
           pagePath={page.path}
